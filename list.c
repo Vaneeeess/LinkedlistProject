@@ -1,130 +1,277 @@
-
-// pun an pa ni//
 #include <stdio.h>
-#include "list.h"
 #include <stdlib.h>
+#include "source.h"
 
-list *createNode (int data)
+
+list *createNode(int data)
 {
-    list* newNode = malloc(sizeof(list));
-
-    newNode->data = data;
-    newNode->next = NULL;
-
-    return newNode;
+	list *newNode = (list*)malloc(sizeof(list));
+	
+	newNode->data = data;
+	newNode->next = NULL;
+	
+	return newNode;
 }
 
-void makelist(list **head , int data)
+void makelist(list **head, int data) 
 {
-    list* newNode = createNode(data);
-
-    if(*head == NULL)
-    {
-        *head = newNode;
-        return;
-    }
-
-    list* st = *head;
-    while(st->next != NULL)
-    {
-        st = st->next;
-    }
-
-    st->next = newNode;
+	
+	list *newNode = createNode(data);
+	
+	if(*head == NULL) 
+	{
+		*head = newNode;
+		return;
+	}
+	
+	list *lastNode = *head;
+	while(lastNode->next != NULL) 
+	{
+		lastNode = lastNode->next;
+	}
+	
+	lastNode->next = newNode;
 }
 
-void printlist(list *st)
+void printlist(list *head)
 {
-    while(st != NULL)
-    {
-        printf("%d ", st->data);
-        st = st->next;
-    }
-    printf("\n\n");
+	
+	list *curr = head;
+	
+	while(curr != NULL) 
+	{
+		printf("%d\t", curr->data);
+		curr = curr->next;
+	}
 }
 
-list *addatfirst(list *head, int data)
+list *reverse(list *head) 
 {
-    list *st = malloc(sizeof(list));
-
-    st->data = data;
-    st->next = head;
-
-    return st;
-}
-
-list *addatpos(list **head, int data, int pos)
-{
-    pos--;
-
-    list *st = malloc(sizeof(list));
-    
-    st->data = data;
-    st->next = NULL;
-
-    if(*head == NULL)
-    {
-        *head = st;
-        return *head;
-    }
-
-    list* current = *head;
-    int count = 1;
-
-    while(count < pos && current != NULL)
-    {
-        current = current->next;
-        count++;
-    }
-
-    if(current == NULL)
-    {
-        printf("Invalid position\n");
-        return *head;
-    }
-
-    st->next = current->next;
-    current->next = st;
-    
-    return *head;
-}
-
-int countthelist(list *head)
-{
-    int count = 0;
-    list *current = head;
-
-    while(current != NULL)
-    {
-        count++;
-        current = current->next;
-    }
-
-    return count;
-}
-
-int sumoflist(list *head) 
-{
-	int sum = 0;
 	list *current = head;
+	list *prev = NULL;
+	list *next = NULL;
 	
 	while(current != NULL)
 	{
-		sum+= current->data;
-		current = current->next;
+		next = current->next;
+		current->next = prev;
+		prev = current;
+		current = next;
 	}
 	
-	return sum;
+	return prev;
 }
 
-list *addatbefore(list **head, int num, int data)
+int countthenodes(list *head)
 {
-	list *newNode = malloc(sizeof(list));
+	list *curr = head;
+	
+	int count = 0;
+	while(curr != NULL) 
+	{
+		count++;
+		curr = curr->next;
+	}
+	
+	return count;
+}
+
+list *insertatFront(list *head, int data) 
+{
+	
+	list *newNode = (list*)malloc(sizeof(list));
+	
+	newNode->data = data;
+	newNode->next = head;
+	
+	return newNode;
+}
+
+void insertatEnd(list **head, int data)
+{
+	
+	list *newNode = (list*)malloc(sizeof(list));
 	
 	newNode->data = data;
 	newNode->next = NULL;
 	
 	if(*head == NULL)
+	{
+		*head = newNode;
+		return;
+	}
+	
+	list *st = *head;
+	while(st->next != NULL)
+	{
+		st = st->next;
+	}
+	
+	st->next = newNode;
+}
+
+list *insertatMid(list *head, int data)
+{
+	
+	list *newNode = (list*)malloc(sizeof(list));
+	
+	newNode->data = data;
+	
+	list *curr = head;
+	list *prev = head;
+	while(curr != NULL && curr->next != NULL) 
+	{
+		curr = curr->next->next;
+		prev = prev->next;
+	}
+	
+		newNode->next = prev->next;
+		prev->next = newNode;
+	
+	return head;
+}
+
+list *deletefirstlist(list *head) 
+{
+	
+	list *curr = head->next;
+	free(head);
+	
+	return curr;
+}
+
+list *deletemiddle(list *head) 
+{
+	list *curr = head;
+	list *prev = head;
+	while(curr != NULL && curr->next != NULL)
+	{
+		curr = curr->next->next;
+		prev = prev->next;
+	}
+	
+	list *kewk = curr->next;
+	prev->next = curr->next;
+	free(curr);
+	
+	return head;
+}
+
+list *deleteend(list *head) 
+{
+	list *curr = head;
+	while(curr != NULL)
+	{
+		curr = curr->next;
+	}
+	
+	free(curr->next);
+	
+	return head;
+}
+
+list *search(list *head, int data)
+{
+	
+	list *curr = head;
+	
+	int found = 0;
+	while(curr != NULL)
+	{
+		if(curr->data = data)
+		{
+			found = 1;
+			break;
+		}
+		
+		curr = curr->next;
+	}
+	if(found) 
+	{
+		printf("The element is existing and found.\n");
+	}
+	else 
+	{
+		printf("The element is not exisitng and not found.\n");
+	}
+}
+
+list *insertatPos(list **head, int data, int pos)
+{
+	
+	list *newNode = (list*)malloc(sizeof(list));
+	
+	newNode->data = data;
+	newNode->next = NULL;
+	
+	pos--;
+	
+	if(*head == NULL) 
+	{
+		*head = newNode;
+		return *head;
+	}
+	
+	list *current = *head;
+	int count = 1;
+	
+	while(count < pos && current->next) 
+	{
+		current = current->next;
+		count++;
+	}
+	
+	if(current == NULL)
+	{
+		printf("Invalid position\n");
+		return *head;
+	}
+	
+	newNode->next = current->next;
+	current->next = newNode;
+	
+	return *head;
+}
+
+int sumoflist(list *head) 
+{
+	list *curr = head;
+	int sum = 0;
+	while(curr != NULL) 
+	{
+		sum+= curr->data;
+		curr = curr->next;
+	}
+	
+	return sum;
+}
+
+float average(list *head) 
+{
+	list *curr = head;
+	int sum = 0;
+	int count = 0;
+	while(curr != NULL)
+	{
+		count++;
+		sum+= curr->data;
+		curr = curr->next;
+	}
+	
+	float avg = (float) sum / count;
+	
+	return avg;
+}
+
+list *addatBefore(list **head, int num, int data)
+{
+	
+	list *newNode = (list*)malloc(sizeof(list));
+	
+	newNode->data = data;
+	newNode->next = NULL;
+	
+	if(*head == NULL) 
 	{
 		return newNode;
 	}
@@ -135,45 +282,29 @@ list *addatbefore(list **head, int num, int data)
 		*head = newNode;
 		return *head;
 	}
+	list *curr = *head;
 	
-	list *current = *head;
-	while(current->next != NULL && current->next->data != num)
+	while(curr->next != NULL && curr->next->data != num)
 	{
-		current = current->next;
+		curr = curr->next;
 	}
 	
-	if(current->next == NULL) 
+	if(curr == NULL)
 	{
-	    printf("%d is not existing in the list.\n", num);
-		return *head;	
+		printf("%d is not exiting the the list.\n", num);
+		return *head;
 	}
-		newNode->next = current->next;
-		current->next = newNode;
+	
+	newNode->next = curr->next;
+	curr->next = newNode;
 	
 	return *head;
 }
 
-float average(list *head) 
-{
-	int sum = 0;
-	int count = 0;
-	list *current = head;
-	while(current != NULL)
-	{
-		count++;
-		sum+=current->data;
-		current = current->next;
-	}
-	
-	float avg = (float) sum / count;
-	
-	return avg;
-}
-
-int addatafter(list *head, int num, int data) 
+list *addatAfter(list *head, int num, int data)
 {
 	
-	list *newNode = malloc(sizeof(list));
+	list *newNode = (list*)malloc(sizeof(list));
 	
 	newNode->data = data;
 	newNode->next = NULL;
@@ -183,47 +314,20 @@ int addatafter(list *head, int num, int data)
 		return newNode;
 	}
 	
-	list *current = head;
-	while(current->next != NULL && current->next->data != num)
+	list *curr = head;
+	while(curr->next != NULL && curr->next->data != num)
 	{
-		current = current->next;
+		curr = curr->next;
 	}
 	
-	if(current == NULL) 
+	if(curr == NULL)
 	{
-		printf("%d is not existing in the list.\n", num);
+		printf("%d is not exiting in the list.\n", num);
 		return head;
 	}
 	
-	newNode->next = current->next;
-	current->next = newNode;
+	newNode->next = curr->next;
+	curr->next = newNode;
 	
 	return head;
 }
-
-int search(list *head, int data) 
-{
-	list *current = head;
-	
-	while(current != NULL) 
-	{
-		if(current->data == data)
-		{
-			return 1;
-		}
-		current = current->next;
-	}
-	return 0;
-}
-
-void deleteatfront(list *head) 
-{
-	if(head == NULL) return;
-	
-	list *temp = head;
-	
-	head = temp->next
-	free(temp);
-} 
-
-
