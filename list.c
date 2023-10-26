@@ -1,3 +1,5 @@
+
+// pun an pa ni//
 #include <stdio.h>
 #include "list.h"
 #include <stdlib.h>
