@@ -1,0 +1,105 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include "list.h"
+/* run this program using the console pauser or add your own getch, system("pause") or input loop */
+
+int main(int argc, char *argv[]) {
+	
+	list *head = NULL;
+	
+	int data, n;
+	
+	printf("How many data you want to fill in?: ");
+	scanf("%d", &n);
+	
+	for(int i = 0; i < n; i++) 
+	{
+		printf("Enter %d data: ", i+1);
+		scanf("%d", &data);
+		makelist(&head, data);
+	}
+	
+	int choice;
+	system("cls");
+	do{
+		
+		printf("1 - Print the list.\n");
+		printf("2 - add at Front.\n");
+		printf("3 - add at Pos.\n");
+		printf("4 - count the list.\n");
+		printf("5 - sum of the list.\n");
+		printf("6 - add at before.\n");
+		printf("7 - the avearge of the list.\n");
+		printf("8 - add at after.\n");
+		printf("9 - Hello World!.\n");
+		printf("10 - Exit the program.\n");
+		printf("\nEnter your choice: ");
+		scanf("%d", &choice);
+		
+		switch(choice){
+			case 1: {
+				printlist(head);
+				break;
+			}
+			case 2: {
+				int num;
+				printf("Enter data you want to add at First: ");
+				scanf("%d", &num);
+				head = addatfirst(head, num);
+				break;
+			}
+			case 3: {
+				int num, pos;
+				printf("Enter data you want to add: ");
+				scanf("%d", &num);
+				printf("At what postion?: ");
+				scanf("%d", &pos);
+				head = addatpos(&head, num, pos);
+				break;
+			}
+			case 4: {
+				printf("The number of nodes in the list are: %d\n", countthelist(head));
+				break;
+			}
+			case 5: {
+				printf("The sum of data in the list is: %d\n", sumoflist(head));
+				break;
+			}
+			case 6: {
+				int num;
+				printf("Enter number you want to add: ");
+				scanf("%d", &num);
+				int pos;
+				printf("Add this number before what?: ");
+				scanf("%d", &pos);
+				head = addatbefore(&head, num, pos);
+				break;
+			}
+			case 7: {
+				printf("The avearge of the list is: %.2f\n", average(head));
+				break;
+			}
+			case 8: {
+				int numl;
+				printf("Enter number you want to add: ");
+				scanf("%d", &numl);
+				printf("Add this number after what?: ");
+				int pos;
+				scanf("%d", &pos);
+				head = addatafter(head,numl, pos);
+				break;
+			}
+			case 9: {
+				printf("Hello World!\n");
+				break;
+			}
+			case 10: {
+				printf("Exit the Program...\n");
+				break;
+			}
+			default: 
+			printf("Invalid Choice!\n");
+		}
+	}while(choice !=10);
+	return 0;
+}
