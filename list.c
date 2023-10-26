@@ -201,4 +201,29 @@ int addatafter(list *head, int num, int data)
 	return head;
 }
 
+int search(list *head, int data) 
+{
+	list *current = head;
+	
+	while(current != NULL) 
+	{
+		if(current->data == data)
+		{
+			return 1;
+		}
+		current = current->next;
+	}
+	return 0;
+}
+
+void deleteatfront(list *head) 
+{
+	if(head == NULL) return;
+	
+	list *temp = head;
+	
+	head = temp->next
+	free(temp);
+} 
+
 
