@@ -1,24 +1,32 @@
-#ifndef List_H
-#define List_H
+#ifndef Source_H
+#define Source_H
 
 
-struct Node
-{
-    int data;
-    struct Node* next;
+struct Node {
+	
+	int data;
+	struct Node* next;
 };
 
 typedef struct Node list;
-list *createNode (int data);
+
+
+list *createNode(int data);
 void makelist(list **head, int data);
 void printlist(list *head);
-list *addatfirst(list *head, int data);
-list *addatpos(list **head, int data, int pos);
-int countthelist(list *head);
+list *reverse(list *head);
+int countthenodes(list *head);
+list *insertatFront(list *head, int data);
+void insertatEnd(list **head, int data);
+list *insertatMid(list *head, int data);
+list *deletefirstlist(list *head);
+list *deletemiddle(list *head);
+list *deleteend(list *head);
+list *search(list *head, int data);
+list *insertatPos(list **head, int data, int pos);
 int sumoflist(list *head);
-list *addatbefore(list **head, int num, int data);
 float average(list *head);
-int addatafter(list *head, int num, int data);
-int search(list *head, int data);
-int search(list *head, int data);
+list *addatBefore(list **head, int num, int data);
+list *addatAfter(list *head, int num, int data);
+
 #endif
