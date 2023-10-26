@@ -1,105 +1,170 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "list.h"
+#include "source.h"
 /* run this program using the console pauser or add your own getch, system("pause") or input loop */
 
 int main(int argc, char *argv[]) {
+	
 	
 	list *head = NULL;
 	
 	int data, n;
 	
-	printf("How many data you want to fill in?: ");
+	printf("Input the number of nodes: ");
 	scanf("%d", &n);
 	
 	for(int i = 0; i < n; i++) 
 	{
-		printf("Enter %d data: ", i+1);
+		printf("Input data for node %d: ", i+1);
 		scanf("%d", &data);
 		makelist(&head, data);
 	}
 	
 	int choice;
+	
 	system("cls");
-	do{
+	
+	do {
 		
-		printf("1 - Print the list.\n");
-		printf("2 - add at Front.\n");
-		printf("3 - add at Pos.\n");
-		printf("4 - count the list.\n");
-		printf("5 - sum of the list.\n");
-		printf("6 - add at before.\n");
-		printf("7 - the avearge of the list.\n");
-		printf("8 - add at after.\n");
-		printf("9 - Hello World!.\n");
-		printf("10 - Exit the program.\n");
-		printf("\nEnter your choice: ");
+		printf("\n1 - display the list\n");
+		printf("\n2 - reverse the list\n");
+		printf("\n3 - count the list\n");
+		printf("\n4 - insert at front\n");
+		printf("\n5 - insert at end\n");
+		printf("\n6 - insert at mid\n");
+		printf("\n7 - delete the first\n");
+		printf("\n8 - delete the middle\n");
+		printf("\n9 - delete the end\n");
+		printf("\n10 - search the element you want\n");
+		printf("\n11 - add at pos you want\n");
+		printf("\n12 - sum of the list\n");
+		printf("\n13 - average of the list\n");
+		printf("\n14 - add before what number\n");
+		printf("\n15 - add after what number\n");
+		
+		
+		
+		
+		printf("\nEnter choice: ");
 		scanf("%d", &choice);
-		
-		switch(choice){
+		switch(choice) {
 			case 1: {
 				printlist(head);
 				break;
 			}
 			case 2: {
-				int num;
-				printf("Enter data you want to add at First: ");
-				scanf("%d", &num);
-				head = addatfirst(head, num);
+				head = reverse(head);
+				printlist(head);
 				break;
 			}
 			case 3: {
-				int num, pos;
-				printf("Enter data you want to add: ");
-				scanf("%d", &num);
-				printf("At what postion?: ");
-				scanf("%d", &pos);
-				head = addatpos(&head, num, pos);
+				printf("The number of nodes in the list are: %d", countthenodes(head));
 				break;
 			}
 			case 4: {
-				printf("The number of nodes in the list are: %d\n", countthelist(head));
+				int number;
+				printf("Enter number you want to add to the front list: ");
+				scanf("%d", &number);
+				head = insertatFront(head, number);
+				printlist(head);
 				break;
 			}
 			case 5: {
-				printf("The sum of data in the list is: %d\n", sumoflist(head));
+				int number;
+				printf("Enter number you want at add to the end list: ");
+				scanf("%d", &number);
+				insertatEnd(&head, number);
+				printlist(head);
 				break;
 			}
 			case 6: {
-				int num;
-				printf("Enter number you want to add: ");
-				scanf("%d", &num);
-				int pos;
-				printf("Add this number before what?: ");
-				scanf("%d", &pos);
-				head = addatbefore(&head, num, pos);
+				int number;
+				printf("Enter number you want to add to the middle list: ");
+				scanf("%d", &number);
+				head = insertatMid(head, number);
+				printlist(head);
 				break;
 			}
 			case 7: {
-				printf("The avearge of the list is: %.2f\n", average(head));
+				printf("The list after deletion of the first node in the list: \n");
+				head = deletefirstlist(head);
+				printlist(head);
 				break;
 			}
 			case 8: {
-				int numl;
-				printf("Enter number you want to add: ");
-				scanf("%d", &numl);
-				printf("Add this number after what?: ");
-				int pos;
-				scanf("%d", &pos);
-				head = addatafter(head,numl, pos);
+				printf("The lsit after the deletion of the middle node in the list: \n");
+				head = deletemiddle(head);
+				printlist(head);
 				break;
 			}
 			case 9: {
-				printf("Hello World!\n");
+				printf("The lsit after the deletion of the end node in the list: \n");
+				head = deleteend(head);
+				printlist(head);
 				break;
 			}
 			case 10: {
+				int number;
+				printf("Enter the number you want to search: ");
+				scanf("%d", &number);
+				head = search(head, number);
+				break;
+			}
+			case 11: {
+				int number, pos;
+				printf("Enter the number you want to add: ");
+				scanf("%d", &number);
+				printf("At what positon?: ");
+				scanf("%d", &pos);
+				head = insertatPos(&head, number, pos);
+				printlist(head);
+				break;
+			}
+			case 12: {
+				printf("The sum of the list is: %d", sumoflist(head));
+				break;
+			}
+			case 13: {
+				printf("The average of the list is: %.2f", average(head));
+				break;
+			}
+			case 14: {
+				int number, pos;
+				printf("Enter number you want to add: ");
+				scanf("%d", &number);
+				printf("Before of what number? (must in the list): ");
+				scanf("%d", &pos);
+				head = addatBefore(&head, number, pos);
+				printlist(head);
+				break;
+			}
+			case 15: {
+				int number, pos;
+				printf("Enter number you want to add: ");
+				scanf("%d", &number);
+				printf("After of what number? (must in the list): ");
+				scanf("%d", &pos);
+				head = addatAfter(head, number , pos);
+				printlist(head);
+				break;
+			}
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			case 42: {
 				printf("Exit the Program...\n");
 				break;
 			}
-			default: 
-			printf("Invalid Choice!\n");
+			default:
+				printf("Invalid Input\n");
 		}
-	}while(choice !=10);
+	}while(choice != 42);
 	return 0;
 }
