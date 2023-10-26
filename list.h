@@ -19,4 +19,6 @@ int sumoflist(list *head);
 list *addatbefore(list **head, int num, int data);
 float average(list *head);
 int addatafter(list *head, int num, int data);
+int search(list *head, int data);
+int search(list *head, int data);
 #endif
